@@ -82,4 +82,34 @@ print(model)
 predictions = model(X)
 print("Predictions:", predictions)
 print("Predictions shape:", predictions.shape)
-        
+
+## CrossEntropyLoss
+
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(
+    model.parameters(),
+    lr = 0.01
+)
+for epoch in range(100):
+    optimizer.zero_grad()  # Clear old gradients
+    predictions = model(X) # Forward propagation
+    loss = criterion(predictions, y)
+    loss.backward()        # Calculate new gradients
+    optimizer.step()       # Update weights
+    if (epoch+1) % 10==0:
+        print(f"epoch {epoch+1}, Loss: {loss.item():.4f}")
+model.eval()
+with torch.no_grad():
+    test_input = torch.tensor(
+        [[word_to_id['deep'],word_to_id['learning']]],
+        dtype=torch.long
+    )
+    output = model(test_input)
+    predicted_id = torch.argmax(output, dim=1).item()
+    predicted_word = next(
+        word for word, idx in word_to_id.items()
+        if idx == predicted_id
+    )
+    
+    print("Input:", "deep learning")
+    print("Predicted next word:", predicted_word)
