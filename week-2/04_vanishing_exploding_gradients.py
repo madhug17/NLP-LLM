@@ -19,7 +19,8 @@ for seq_length in [10, 50, 100, 200, 500, 1000]:
 
     output, hidden = rnn(x)
 
-    loss = output.sum()
+    loss = output.sum() # reason behind increase the gradient like for exploding gradient 
+    # if we use the mean() then it will set 
 
     loss.backward()
 
