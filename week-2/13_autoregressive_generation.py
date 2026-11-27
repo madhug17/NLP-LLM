@@ -90,4 +90,4 @@ with torch.no_grad():
 
         current_input = predicted_id.unsqueeze(0)
 
-print("\nGenerated sentence:", " ".join(generated))
+print("\nGenerated sentence.:", " ".join(generated))
