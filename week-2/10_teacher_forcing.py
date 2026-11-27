@@ -32,17 +32,15 @@ model = LanguageModel()
 optimizer = torch.optim.Adam(model.parameters(),lr=0.01)
 criterion = nn.CrossEntropyLoss()
 for epoch in range(101):
-
     optimizer.zero_grad()
-
     logits, hidden = model(x)
 
     loss = criterion(
         logits.reshape(-1, 5),
         y.reshape(-1)
     )
-    loss.backward()
-    optimizer.step()
+    loss.backward() # calculates gradients.
+    optimizer.step() # updates model weights using those gradients.
 
     if epoch % 20 == 0:
         print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
